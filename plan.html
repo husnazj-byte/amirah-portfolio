@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amirah Husna | Development Plan</title>
+    <style>
+        /* 🎨 TEMA WARNA BACKGROUND & BINTIK BINTANG (SERAGAM 100%) */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0; padding: 0; background-color: #050a18; 
+            background-image: 
+                radial-gradient(circle at 30% 40%, rgba(28, 77, 177, 0.3) 0%, transparent 70%),
+                radial-gradient(circle at 80% 60%, rgba(11, 22, 59, 0.9) 0%, #040812 100%);
+            background-attachment: fixed; color: #e2e8f0; overflow-x: hidden; position: relative;
+        }
+
+        body::before {
+            content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background-image: radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px), radial-gradient(white, rgba(255,255,255,.1) 1px, transparent 2px);
+            background-size: 90px 90px; background-position: 0 0, 45px 45px; opacity: 0.6; pointer-events: none; z-index: 3;
+        }
+
+        /* 🌐 GLOB WIREFRAME */
+        .globe {
+            position: absolute; width: 380px; height: 380px; border: 2px solid rgba(255, 255, 255, 0.35); border-radius: 50%; pointer-events: none; z-index: 4;
+        }
+        .globe::before, .globe::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: 1.5px solid rgba(255, 255, 255, 0.25); border-radius: 50%;
+        }
+        .globe::before { transform: scaleX(0.3); } .globe::after { transform: scaleX(0.65); }
+        .globe-top-right { top: -100px; right: -100px; transform: rotate(20deg); }
+        .globe-bottom-left { bottom: -120px; left: -100px; transform: rotate(-20deg); }
+
+        /* 🌐 SYSTEM NAVIGASI POP-UP SMART STICKY */
+        .navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 80px; background-color: rgba(6, 11, 25, 0.85);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08); backdrop-filter: blur(10px);
+            position: sticky; top: 0; z-index: 100;
+            transition: transform 0.4s cubic-bezier(0.1, 1, 0.1, 1), background-color 0.3s;
+        }
+
+        .navbar.nav-hidden { transform: translateY(-100%); }
+        .brand-name { font-weight: bold; font-size: 18px; color: #58a6ff; letter-spacing: 1px; text-decoration: none; }
+        .nav-links a { text-decoration: none; color: #94a3b8; margin-left: 25px; font-size: 14px; font-weight: 600; text-transform: uppercase; transition: 0.3s; padding-bottom: 5px; z-index: 20;}
+        .nav-links a:hover { color: #58a6ff; }
+        .nav-links a.active { color: #4ade80; border-bottom: 2px solid #4ade80; }
+
+        /* 🛠️ SECTION PLAN CONTENT */
+        .plan-section { padding: 60px 80px; position: relative; z-index: 5; }
+        .section-header { margin-bottom: 50px; }
+        /* .section-tag // TAG // SECTION 03 DAH DIBUANG DARI SINI */
+        .section-title { font-size: 42px; color: #ffffff; margin: 0 0 15px 0; font-weight: 800; }
+        .section-desc { max-width: 800px; color: #94a3b8; font-size: 16px; line-height: 1.6; margin-bottom: 40px; }
+
+        /* TIMELINE STRUCTURE */
+        .timeline {
+            position: relative; max-width: 900px; margin: 0 auto 60px auto; padding: 20px 0;
+        }
+
+        .timeline::after {
+            content: ''; position: absolute; width: 2px; background-color: rgba(56, 189, 248, 0.2);
+            top: 0; bottom: 0; left: 50%; margin-left: -1px;
+        }
+
+        .timeline-container {
+            padding: 10px 40px; position: relative; background-color: transparent; width: 41%;
+        }
+
+        .timeline-container::after {
+            content: ''; position: absolute; width: 12px; height: 12px; right: -7px;
+            background-color: #050a18; border: 3px solid #4ade80; top: 25px; border-radius: 50%; z-index: 1;
+            box-shadow: 0 0 10px #4ade80;
+        }
+
+        .left { left: 0; text-align: right; }
+        .right { left: 50%; text-align: left; }
+        .right::after { left: -7px; }
+
+        .timeline-content {
+            padding: 30px; background-color: rgba(13, 27, 42, 0.5);
+            border: 1px solid rgba(56, 189, 248, 0.15); border-radius: 12px;
+            transition: all 0.4s ease; position: relative;
+        }
+
+        .timeline-content:hover {
+            border-color: #38bdf8; box-shadow: 0 0 25px rgba(56, 189, 248, 0.25); transform: translateY(-3px);
+        }
+
+        .time-tag {
+            font-family: monospace; font-size: 13px; color: #4ade80; font-weight: bold;
+            text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px;
+        }
+
+        .plan-title { font-size: 20px; color: #ffffff; margin: 0 0 15px 0; font-weight: 700; }
+        .plan-text { color: #cbd5e1; font-size: 15px; line-height: 1.6; margin: 0; }
+
+        /* FOOTER BUTTONS */
+        .btn-footer-container { display: flex; gap: 20px; justify-content: center; margin-top: 40px; }
+        .footer-btn { padding: 12px 28px; border-radius: 5px; font-weight: bold; font-size: 13px; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+        .btn-outline { border: 1px solid #38bdf8; color: #38bdf8; background: transparent; }
+        .btn-outline:hover { background: rgba(56, 189, 248, 0.1); }
+        .btn-filled { background-color: #ffffff; color: #050a18; border: 1px solid #ffffff; }
+        .btn-filled:hover { background-color: #cbd5e1; }
+    </style>
+</head>
+<body>
+
+    <div class="globe globe-top-right"><div class="globe-inner-1"></div><div class="globe-inner-2"></div><div class="globe-inner-3"></div></div>
+    <div class="globe globe-bottom-left"><div class="globe-inner-1"></div><div class="globe-inner-2"></div><div class="globe-inner-3"></div></div>
+
+    <!-- 🌐 NAVIGATION BAR -->
+    <div class="navbar" id="cyberNavbar">
+        <a href="indexportfolio.html" class="brand-name">Amirah Husna</a>
+        <div class="nav-links">
+            <a href="indexportfolio.html">Home</a>
+            <a href="career.html">Career</a>
+            <a href="skills.html">Skills</a>
+            <a href="plan.html" class="active">Plan</a>
+            <a href="evidence.html">Evidence</a>
+            <a href="reflection.html">Reflection</a>
+        </div>
+    </div>
+
+    <!-- 🚀 MAIN PLAN SECTION -->
+    <div class="plan-section">
+        <div class="section-header" style="text-align: center;">
+            <h2 class="section-title">Professional Development Plan</h2>
+            <p class="section-desc" style="margin: 0 auto 40px auto;">
+                A proactive, structured timeline outlining my strategic goals to master industry-level network infrastructure baselines, reduce competency gaps, and transition into a certified corporate Network Security role.
+            </p>
+        </div>
+
+        <!-- ⏳ CYBER TIMELINE INFRASTRUCTURE -->
+        <div class="timeline">
+            
+            <!-- STEP 1: SHORT TERM (LEFT) -->
+            <div class="timeline-container left">
+                <div class="timeline-content">
+                    <div class="time-tag">01 // Short-Term Goal (Graduation Phase)</div>
+                    <h3 class="plan-title">Enterprise Internship & Academic Completion</h3>
+                    <p class="plan-text">
+                        Secure a specialized professional internship attachment within a corporate IT or hospital technical infrastructure unit. Focus on absorbing live perimeter routing, managing enterprise firewalls, and logging daily administrative configurations under professional supervision.
+                    </p>
+                </div>
+            </div>
+
+            <!-- STEP 2: MEDIUM TERM (RIGHT) -->
+            <div class="timeline-container right">
+                <div class="timeline-content">
+                    <div class="time-tag">02 // Medium-Term Goal (1-2 Years Post-Grad)</div>
+                    <h3 class="plan-title">Professional Certification & Infrastructure Roles</h3>
+                    <p class="plan-text">
+                        Obtain industry-recognized core credentials, prioritizing the Cisco Certified Network Associate (CCNA) to formally validate routing logic competency. Transition into full-time Associate Network Engineer or Cybersecurity Analyst positions to manage live Security Operations Center (SOC) flows.
+                    </p>
+                </div>
+            </div>
+
+            <!-- STEP 3: LONG TERM (LEFT) -->
+            <div class="timeline-container left">
+                <div class="timeline-content">
+                    <div class="time-tag">03 // Long-Term Goal (3-5 Years Industry)</div>
+                    <h3 class="plan-title">Cloud Infrastructure Security & Advanced Engineering</h3>
+                    <p class="plan-text">
+                        Deepen automation expertise by mastering programmatic cloud routing architectures, building on foundations engineered in my Python and FastAPI VPC visualization projects. Target advanced certifications such as Certified Ethical Hacker (CEH) to step into senior infrastructure defense leadership roles.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- FOOTER NAVIGATION BUTTONS -->
+        <div class="btn-footer-container">
+            <a href="skills.html" class="footer-btn btn-outline">Skills Assessment</a>
+            <a href="evidence.html" class="footer-btn btn-filled">Evidence Portfolio</a>
+        </div>
+    </div>
+
+    <!-- 🧠 SMART NAV JAVASCRIPT -->
+    <script>
+        const navbar = document.getElementById('cyberNavbar');
+        let lastScrollY = window.scrollY;
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > lastScrollY) {
+                navbar.classList.add('nav-hidden');
+            } else {
+                navbar.classList.remove('nav-hidden');
+            }
+            lastScrollY = window.scrollY;
+        });
+    </script>
+
+</body>
+</html>
